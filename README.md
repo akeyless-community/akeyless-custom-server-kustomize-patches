@@ -11,7 +11,7 @@ This repo contains a set of kustomize patches for the Akeyless Custom Server des
 
 ## Usage
 
-Edit the `kustomization.yml` file to enable the correct script or create your own version of the repo by pressing the "Use this template" button and then add your own script(s) into your own repo.
+Edit the [kustomization.yml](kustomization.yml) file to enable the correct script or create your own version of the repo by pressing the "Use this template" button and then add your own script(s) into your own repo.
 
 **Be sure to set the GW_ACCESS_ID to be the admin access ID of the Akeyless Gateway you want to be allowed to call this custom server.**
 
