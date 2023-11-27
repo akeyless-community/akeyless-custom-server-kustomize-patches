@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+- name: akl-custom-script-configmap
+  files:
+  ## ---=======********** CUSTOM LOGIC SCRIPT **********=======---
+  ## Only enable ONE of the following examples at a time
+  ## ---=======********** CUSTOM LOGIC SCRIPT **********=======---
+
+  ## Custom Dynamic Secret (Create/Delete Temp User)
+  # - example-scripts/splunk_temp_user/custom_logic.sh                   # Custom Dynamic Secret
+
+  ## Custom Rotated Secret (Rotate Password)
+  - example-scripts/random_rotated_password/custom_logic.sh            # Custom Rotated Secret
+  # - example-scripts/okta_rotated_password/custom_logic.sh              # Custom Rotated Secret
+  # - example-scripts/keycloak_rotate_admin_password/custom_logic.sh     # Custom Rotated Secret
+  # - example-scripts/heroku_push_rotated_creds/custom_logic.sh          # Custom Rotated Secret
+
+secretGenerator:
+- name: akl-gateway-access-id-secret
+  literals:
+  ## Place the Gateway Admin Access ID here of the ONLY Gateway that will be allowed to access this custom server
+  - GW_ACCESS_ID=p-1234f3d4g12
+
+resources:
+- deployment.yml
+- service.yml
+- ingress.yml ## Comment this line out if you don't want to use ingress

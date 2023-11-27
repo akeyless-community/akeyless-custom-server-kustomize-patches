@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: akl-custom-server-service
+spec:
+  type: ClusterIP
+  selector:
+    app: akl-custom-server
+  ports:
+    - protocol: TCP
+      port: 2608
+      targetPort: 2608

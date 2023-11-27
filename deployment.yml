@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: akl-custom-server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: akl-custom-server
+  template:
+    metadata:
+      labels:
+        app: akl-custom-server
+    spec:
+      containers:
+      - name: akl-custom-server
+        image: akeyless/custom-server
+        ports:
+        - containerPort: 2608
+        volumeMounts:
+        - name: script-volume
+          mountPath: /custom_logic.sh
+          subPath: custom_logic.sh
+        - name: secret-volume
+          mountPath: /etc/secrets
+          readOnly: true
+        env:
+        - name: GW_ACCESS_ID
+          valueFrom:
+            secretKeyRef:
+              name: akl-gateway-access-id-secret
+              key: GW_ACCESS_ID
+      volumes:
+      - name: script-volume
+        configMap:
+          name: akl-custom-script-configmap
+      - name: secret-volume
+        secret:
+          secretName: akl-gateway-access-id-secret
