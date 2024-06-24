@@ -45,6 +45,8 @@ sequenceDiagram
         Akeyless->>Webhook: Return Secret Value
 
         Webhook->>Akeyless: Update Azure Key Vault Secret using USC
+        Akeyless->>AzureKV: Update Secret in Azure Key Vault
+        AzureKV->>Akeyless: Return Update Confirmation
         Akeyless->>Webhook: Return Update Confirmation
         Webhook->>Webhook: Set ACTION_TAKEN=true
     else
