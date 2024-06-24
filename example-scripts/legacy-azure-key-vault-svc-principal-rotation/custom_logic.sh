@@ -1,5 +1,13 @@
-# The Rotated Secret Payload should look like this:
-# { "user_email": "me@mydomain.com", "password": "currentPassword" }
+# The Rotated Secret Payload should look something like this:
+# {
+#   "access_id": "p-oki4w02qfz9c",
+#   "k8s_auth_config_name": "cg-lab-aks",
+#   "gateway_url": "https://gw-config.cg2.cs.akeyless.fans",
+#   "rotated_secret_1_path": "/Azure KV Cg Rotated Secret 1",
+#   "rotated_secret_2_path": "/Azure KV Cg Rotated Secret 2",
+#   "azure_key_vault_secret_id": "https://cg-akl.vault.azure.net/secrets/azure-sp-ready",
+#   "usc_path": "/AKV - USC - cg-akl"
+# }
 # For more information, visit https://docs.akeyless.io/docs/create-a-custom-rotated-secret
 
 akeyless update

@@ -11,7 +11,7 @@ configMapGenerator:
       # - example-scripts/splunk_temp_user/custom_logic.sh                                 # Custom Dynamic Secret
 
       ## Custom Rotated Secret (Rotate Password)
-      - example-scripts/random_rotated_password/custom_logic.sh                            # Custom Rotated Secret
+      - example-scripts/random_rotated_password/custom_logic.sh # Custom Rotated Secret
       # - example-scripts/okta_rotated_password/custom_logic.sh                            # Custom Rotated Secret
       # - example-scripts/keycloak_rotate_admin_password/custom_logic.sh                   # Custom Rotated Secret
       # - example-scripts/heroku_push_rotated_creds/custom_logic.sh                        # Custom Rotated Secret
@@ -23,7 +23,7 @@ configMapGenerator:
 secretGenerator:
   - literals:
       ## Place the Gateway Admin Access ID here of the ONLY Gateway that will be allowed to trigger this custom server
-      - GW_ACCESS_ID=p-om5l****1jjk
+      - GW_ACCESS_ID=p-om5l3****jjk
     name: akl-gateway-access-id-secret
 
 resources:
@@ -31,6 +31,5 @@ resources:
   - service.yml
   - ingress.yml
   # - example-scripts/legacy-azure-key-vault-svc-principal-rotation/azure-legacy-custom-sa.yml
-
 # patches:
-  # - path: example-scripts/legacy-azure-key-vault-svc-principal-rotation/patch-deployment.yml
+# - path: example-scripts/legacy-azure-key-vault-svc-principal-rotation/patch-deployment.yml
