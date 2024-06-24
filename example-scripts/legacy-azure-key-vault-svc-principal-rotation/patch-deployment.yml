@@ -1,0 +1,11 @@
+# This file is intended to patch the existing deployment and is not a full deployment configuration.
+# It should be used in conjunction with the main deployment.yml file to apply specific changes or updates.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: akl-custom-server-deployment
+spec:
+  template:
+    spec:
+      serviceAccountName: azure-legacy-custom-sa

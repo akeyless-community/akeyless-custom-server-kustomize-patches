@@ -12,27 +12,28 @@ spec:
         app: akl-custom-server
     spec:
       containers:
-      - name: akl-custom-server
-        image: akeyless/custom-server
-        ports:
-        - containerPort: 2608
-        volumeMounts:
-        - name: script-volume
-          mountPath: /custom_logic.sh
-          subPath: custom_logic.sh
-        - name: secret-volume
-          mountPath: /etc/secrets
-          readOnly: true
-        env:
-        - name: GW_ACCESS_ID
-          valueFrom:
-            secretKeyRef:
-              name: akl-gateway-access-id-secret
-              key: GW_ACCESS_ID
+        - name: akl-custom-server
+          image: akeyless/custom-server
+          ports:
+            - containerPort: 2608
+          volumeMounts:
+            - name: script-volume
+              mountPath: /custom_logic.sh
+              subPath: custom_logic.sh
+            - name: secret-volume
+              mountPath: /etc/secrets
+              readOnly: true
+          env:
+            - name: GW_ACCESS_ID
+              valueFrom:
+                secretKeyRef:
+                  name: akl-gateway-access-id-secret
+                  key: GW_ACCESS_ID
+          command: ["/usr/local/bin/custom_server", "--debug"]
       volumes:
-      - name: script-volume
-        configMap:
-          name: akl-custom-script-configmap
-      - name: secret-volume
-        secret:
-          secretName: akl-gateway-access-id-secret
+        - name: script-volume
+          configMap:
+            name: akl-custom-script-configmap
+        - name: secret-volume
+          secret:
+            secretName: akl-gateway-access-id-secret
