@@ -1,6 +1,8 @@
 # Legacy Azure Key Vault Svc Principal Rotation
 
-This example shows how to rotate a service principal secret and store them inside Azure Key Vault. This method is designed to show how you can use Akeyless to rotate secrets in a legacy process and then work the organization towards migrating to dynamic secrets.
+## Overview
+
+This example shows how to rotate a service principal secret and store them inside Azure Key Vault. This method is designed to show how you can use Akeyless to rotate secrets into a legacy process while utilizing the features of Akeyless and wiring them together. Migrations from legacy custom processes are often critical to the success of modern applications and this example shows how to do just that.
 
 The same custom server webhook can be used by multiple custom rotated secrets to rotate different secrets and you can scale horizontally to rotate secrets in parallel.
 
