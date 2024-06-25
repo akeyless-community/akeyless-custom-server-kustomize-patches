@@ -2,6 +2,8 @@
 
 This example shows how to rotate a service principal secret and store them inside Azure Key Vault. This method is designed to show how you can use Akeyless to rotate secrets in a legacy process and then work the organization towards migrating to dynamic secrets.
 
+The same custom server webhook can be used by multiple custom rotated secrets to rotate different secrets and you can scale horizontally to rotate secrets in parallel.
+
 ## Legacy Process
 
 Azure Service principal secrets often suffer from replication lag. A legacy process was devised to rotate the service principal secret for two Azure service principals in a way that was not disruptive to the service similar to "blue/green" deployments. The legacy process is as follows:
@@ -65,6 +67,8 @@ sequenceDiagram
 - Deploy this custom server to a kubernetes cluster with the configuration under the example-scripts/legacy-azure-key-vault-svc-principal-rotation directory and the changes to the kustomization.yml file that accompany that directory
 - Create a new custom web target pointing to the new custom server endpoint
 - Create a new custom rotated secret that points to the new custom web target and setup auto-rotation
+- Make sure the Kubernetes cluster where the custom server is deployed has k8s authentication set up within Akeyless
+- Create a new Access Role that grants the custom server, using the k8s auth method, access to the two rotated secrets and the Universal Secrets Connector
 
 
 ## Example Starting Payload
