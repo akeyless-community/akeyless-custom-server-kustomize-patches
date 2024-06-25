@@ -31,5 +31,6 @@ resources:
   - service.yml
   - ingress.yml
   # - example-scripts/legacy-azure-key-vault-svc-principal-rotation/azure-legacy-custom-sa.yml
+
 # patches:
-# - path: example-scripts/legacy-azure-key-vault-svc-principal-rotation/patch-deployment.yml
+#   - path: example-scripts/legacy-azure-key-vault-svc-principal-rotation/patch-deployment.yml

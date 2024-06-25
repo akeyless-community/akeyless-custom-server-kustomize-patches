@@ -10,7 +10,7 @@
 # }
 # For more information, visit https://docs.akeyless.io/docs/create-a-custom-rotated-secret
 
-akeyless update
+akeyless update > /dev/null 2>&1
 
 function run_rotate() {
     PAYLOAD=$(echo "$*" | base64 -d)
@@ -26,12 +26,12 @@ function run_rotate() {
     USC_PATH=$(echo "$PAYLOAD_VALUE" | jq -r .usc_path)
     
     # Authenticate with Akeyless CLI
-    AUTH_RESPONSE=$(akeyless auth --access-id "$ACCESS_ID" --access-type k8s --k8s-auth-config-name "$K8S_AUTH_CONFIG_NAME" --gateway-url "$GATEWAY_URL" --json)
+    AUTH_RESPONSE=$(akeyless auth --access-id "$ACCESS_ID" --access-type k8s --k8s-auth-config-name "$K8S_AUTH_CONFIG_NAME" --gateway-url "$GATEWAY_URL" --json 2>/dev/null)
     TOKEN=$(echo $AUTH_RESPONSE | jq -r '.token')
     
     # Describe rotated secrets
-    ROTATED_SECRET_1=$(akeyless describe-item -n "$ROTATED_SECRET_1_PATH" --token "$TOKEN" --json)
-    ROTATED_SECRET_2=$(akeyless describe-item -n "$ROTATED_SECRET_2_PATH" --token "$TOKEN" --json)
+    ROTATED_SECRET_1=$(akeyless describe-item -n "$ROTATED_SECRET_1_PATH" --token "$TOKEN" --json 2>/dev/null)
+    ROTATED_SECRET_2=$(akeyless describe-item -n "$ROTATED_SECRET_2_PATH" --token "$TOKEN" --json 2>/dev/null)
     
     LAST_ROTATION_1=$(echo $ROTATED_SECRET_1 | jq -r '.last_rotation_date')
     LAST_ROTATION_2=$(echo $ROTATED_SECRET_2 | jq -r '.last_rotation_date')
@@ -57,20 +57,20 @@ function run_rotate() {
     # Check if the oldest secret is older than 30 minutes
     if [ $((CURRENT_TIME - OLDEST_ROTATION)) -gt 1800 ]; then
         # Get value of the oldest secret
-        SECRET_VALUE=$(akeyless rotated-secret get-value -n "$OLDEST_SECRET_PATH" --token "$TOKEN" --json)
+        SECRET_VALUE=$(akeyless rotated-secret get-value -n "$OLDEST_SECRET_PATH" --token "$TOKEN" --json 2>/dev/null)
         
         # Update Azure Key Vault Secret using USC
-        USC_UPDATE_RESPONSE=$(akeyless usc update -n "$USC_PATH" --gateway-url "$GATEWAY_URL" -s "$AZURE_KEY_VAULT_SECRET_ID" -v "$SECRET_VALUE" --token "$TOKEN")
-        
-        echo "Updated Azure Key Vault Secret: $USC_UPDATE_RESPONSE"
+        USC_UPDATE_RESPONSE=$(akeyless usc update -n "$USC_PATH" --gateway-url "$GATEWAY_URL" -s "$AZURE_KEY_VAULT_SECRET_ID" -v "$SECRET_VALUE" --token "$TOKEN" --json 2>/dev/null)
         ACTION_TAKEN=true
     else
-        echo "No rotation needed. Oldest secret is not older than 30 minutes."
+        PAYLOAD_JSON=$(echo -n "{ \"payload\": $PAYLOAD_VALUE }")
+        echo -n "$PAYLOAD_JSON"
     fi
     
     # Prepare the payload to return with additional information
     PAYLOAD_JSON=$(echo "$PAYLOAD_VALUE" | jq -c --arg active_secret_path "$ACTIVE_SECRET_PATH" --argjson action_taken "$ACTION_TAKEN" \
     '. + {active_secret_path: $active_secret_path, action_taken: $action_taken}')
+    PAYLOAD_JSON=$(echo -n "$PAYLOAD_JSON" | jq -Rsa . | sed -e 's/\\n//g' -e 's/\\t//g')
     PAYLOAD_JSON=$(echo -n "{ \"payload\": $PAYLOAD_JSON }")
     echo -n "$PAYLOAD_JSON"
 }

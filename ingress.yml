@@ -17,20 +17,20 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  ingressClassName: nginx  # Assuming 'nginx' is your ingress class name
+  ingressClassName: nginx # Assuming 'nginx' is your ingress class name
   rules:
-  ## This is the domain name that will be used to access the custom server
-  - host: custom2.cg.cs.akeyless.fans
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: akl-custom-server-service
-            port:
-              number: 2608
+    ## This is the domain name that will be used to access the custom server
+    - host: custom3.cg.cs.akeyless.fans
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: akl-custom-server-service
+                port:
+                  number: 2608
   tls:
-  - hosts:
-    - custom2.cg.cs.akeyless.fans
-    secretName: custom2.cg.cs.akeyless.fans-tls
+    - hosts:
+        - custom3.cg.cs.akeyless.fans
+      secretName: custom3.cg.cs.akeyless.fans-tls
