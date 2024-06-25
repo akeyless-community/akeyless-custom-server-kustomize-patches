@@ -62,9 +62,6 @@ function run_rotate() {
         # Update Azure Key Vault Secret using USC
         USC_UPDATE_RESPONSE=$(akeyless usc update -n "$USC_PATH" --gateway-url "$GATEWAY_URL" -s "$AZURE_KEY_VAULT_SECRET_ID" -v "$SECRET_VALUE" --token "$TOKEN" --json 2>/dev/null)
         ACTION_TAKEN=true
-    else
-        PAYLOAD_JSON=$(echo -n "{ \"payload\": $PAYLOAD_VALUE }")
-        echo -n "$PAYLOAD_JSON"
     fi
     
     # Prepare the payload to return with additional information
