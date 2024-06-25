@@ -85,6 +85,20 @@ sequenceDiagram
 }
 ```
 
+## Payload Fields Explanation
+
+The payload required for the custom rotated secret contains several fields. Below is an explanation of each field based on the existing documentation and the `custom_logic.sh` script:
+
+- `access_id`: The access ID used to authenticate using Kubernetes Auth with the Akeyless CLI. This is required to obtain a token for further API calls.
+- `k8s_auth_config_name`: The name of the Kubernetes authentication configuration. This is used to authenticate the custom server with Akeyless using the Kubernetes authentication method.
+- `gateway_url`: The Gateway Cluster URL of the Akeyless Gateway that the k8s auth is configured on.
+- `rotated_secret_1_path`: The path to the first Azure rotated secret. This is used to describe and retrieve the details of the first rotated secret.
+- `rotated_secret_2_path`: The path to the second Azure rotated secret. This is used to describe and retrieve the details of the second rotated secret.
+- `azure_key_vault_secret_id`: The ID of the Azure Key Vault secret. This is used to update the Azure Key Vault secret with the value of the rotated secret.
+- `usc_path`: The path to the Universal Secrets Connector (USC). This is used to update the Azure Key Vault secret using the USC.
+
+These fields are necessary for the custom server to authenticate with Akeyless, describe the rotated secrets, determine the oldest secret, and update the Azure Key Vault secret accordingly.
+
 ## Troubleshooting
 
 You can exec into the custom server pod and run these commands to more closely debug any issues with your custom bash script.
