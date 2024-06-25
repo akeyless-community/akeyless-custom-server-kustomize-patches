@@ -29,7 +29,7 @@ secretGenerator:
 resources:
   - deployment.yml
   - service.yml
-  - ingress.yml
+  # - ingress.yml
   # - example-scripts/legacy-azure-key-vault-svc-principal-rotation/azure-legacy-custom-sa.yml
 
 # patches:
